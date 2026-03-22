@@ -1,5 +1,7 @@
-{% extends '../base.html' %} {% load static %} {% block title %}Home{% endblock
-title %} {% block content %} {% include 'banner.html' %}
+{% extends 'base.html' %}
+{% load static  %}
+{% block title %}Home{% endblock title %}
+{% block content %}Home {% include 'banner.html' %}
 
 <section class="blog-posts">
   <div class="container">
@@ -10,7 +12,7 @@ title %} {% block content %} {% include 'banner.html' %}
             <div class="col-lg-12">
               <div class="blog-post">
                 <div class="blog-thumb">
-                  <img src="assets/images/blog-post-01.jpg" alt="" />
+                  <img src="{% static 'images/blog-post-01.jpg' %}" alt="" />
                 </div>
                 <div class="down-content">
                   <span>Lifestyle</span>
@@ -61,7 +63,7 @@ title %} {% block content %} {% include 'banner.html' %}
             <div class="col-lg-12">
               <div class="blog-post">
                 <div class="blog-thumb">
-                  <img src="assets/images/blog-post-02.jpg" alt="" />
+                  <img src="{% static 'images/blog-post-02.jpg' %}" alt="" />
                 </div>
                 <div class="down-content">
                   <span>Healthy</span>
@@ -128,7 +130,7 @@ title %} {% block content %} {% include 'banner.html' %}
             <div class="col-lg-12">
               <div class="blog-post">
                 <div class="blog-thumb">
-                  <img src="assets/images/blog-post-03.jpg" alt="" />
+                  <img src="{% static 'images/blog-post-03.jpg' %}" alt="" />
                 </div>
                 <div class="down-content">
                   <span>Fashion</span>
