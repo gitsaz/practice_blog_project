@@ -38,8 +38,13 @@
                       <div class="col-6">
                         <ul class="post-tags">
                           <li><i class="fa fa-tags"></i></li>
-                          <li><a href="#"></a>,</li>
-                          <li><a href="#">Nature</a></li>
+                          {% if blog.tag.all.count > 0 %}
+                          {% for tag in blog.tag.all %}
+                          <li><a href="#">{{ tag.title }}</a></li>
+                          {% endfor %}
+                          {% else %}
+                          <li>None</li>
+                          {% endif %}
                         </ul>
                       </div>
                       <div class="col-6">
