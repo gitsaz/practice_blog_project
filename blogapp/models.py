@@ -4,8 +4,8 @@ from account.models import User
 # Create your models here.
 
 class Category(models.Model):
-    title = models.CharField
-    slug = models.SlugField
+    title = models.CharField(max_length=100)
+    slug = models.SlugField(blank=True, unique=True)
     created_date = models.DateField(auto_now_add=True)
     
     def __str__(self):
@@ -16,8 +16,8 @@ class Category(models.Model):
         return super().save(*args,**kwargs)
     
 class Tag(models.Model):
-    title = models.CharField
-    slug = models.SlugField
+    title = models.CharField(max_length=100)
+    slug = models.SlugField(blank=True, unique=True)
     created_date = models.DateField(auto_now_add=True)
     
     def __str__(self):
@@ -49,7 +49,7 @@ class Blog(models.Model):
     description = models.TextField(
         max_length=1000,
     )
-    slug = models.SlugField(blank=True)
+    slug = models.SlugField(blank=True, unique=True)
     banner = models.ImageField(upload_to='blogs_banner')
     created_date = models.DateField(auto_now_add=True)
     
