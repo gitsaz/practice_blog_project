@@ -28,7 +28,7 @@
                     <li><a href="#">{{blog.blogs_comment.all.count}} Comments</a></li>
                   </ul>
                   <p>
-                   {{blog.description|truncatechars:50}}
+                   {{blog.description|truncatechars:150}}
                    {% if blog.description|length > 150 %}
                   <a href="">More</a>
                   {% endif %}
