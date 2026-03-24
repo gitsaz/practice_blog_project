@@ -15,4 +15,14 @@ def home(request):
     return render(request, 'home.html', context)
 
 def blogs(request):
-    return render(request, 'blogs.html')
+    blogs = Blog.objects.order_by('-created_date')
+    tags = Tag.objects.order_by('-created_date')
+    categories = Category.objects.order_by('-created_date')
+    
+    context = {
+        'blogs':blogs,
+        'tags':tags,
+        'categories':categories
+    }
+    
+    return render(request, 'blogs.html', context)
