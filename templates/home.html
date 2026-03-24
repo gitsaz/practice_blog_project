@@ -19,7 +19,7 @@
                 </div>
                 <div class="down-content">
                   <span>{{ blog.category }}</span>
-                  <a href="post-details.html"
+                  <a href="{% url 'post_details' blog.slug %}"
                     ><h4>{{blog.title}}</h4></a
                   >
                   <ul class="post-info">
