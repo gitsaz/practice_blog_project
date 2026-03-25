@@ -48,3 +48,34 @@ def PostDetails(request, slug):
     }
     
     return render(request, 'post_details.html', context)
+
+
+def tag_blogs(request, slug):
+    tag = get_object_or_404(Tag, slug=slug)
+    tags = Tag.objects.order_by('-created_date')
+    blogs = tag.tag_blogs.all()
+    categories = Category.objects.all()
+    
+    context = {
+        'tags':tags,
+        'blogs':blogs,
+        'categories':categories
+    }
+    
+    return render(request, 'tag_blogs.html', context)
+
+
+
+def category_blogs(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    categories = Category.objects.order_by('-created_date')
+    blogs = category.category_blogs.all()
+    tags = Tag.objects.all()
+    
+    context = {
+        'tags':tags,
+        'blogs':blogs,
+        'categories':categories
+    }
+    
+    return render(request, 'category_blogs.html', context)

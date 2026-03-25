@@ -40,7 +40,7 @@
                           <li><i class="fa fa-tags"></i></li>
                           {% if blog.tag.all.count > 0 %}
                           {% for tag in blog.tag.all %}
-                          <li><a href="#">{{ tag.title }}</a></li>
+                          <li><a href="{% url 'tag_blogs' tag.slug %}">{{ tag.title }}</a></li>
                           {% endfor %}
                           {% else %}
                           <li>None</li>
