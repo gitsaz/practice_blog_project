@@ -42,9 +42,13 @@ def blogs(request):
 
 def blog_details(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
+    categories = Category.objects.all()
+    tags = Tag.objects.all()
     
     context = {
-        'blog':blog
+        'blog':blog,
+        'categories':categories,
+        'tags':tags
     }
     
     return render(request, 'blog_details.html', context)
