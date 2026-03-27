@@ -44,11 +44,16 @@ def blog_details(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
     categories = Category.objects.all()
     tags = Tag.objects.all()
+    related_post = Blog.objects.filter(category=blog.category).exclude(id=blog.id).order_by('-id')
+    
+    if not related_post:
+        related_post = Blog.objects.filter(category=blog.category).exclude(id=blog.id).order_by('-created_date')
     
     context = {
         'blog':blog,
         'categories':categories,
-        'tags':tags
+        'tags':tags,
+        'related_post':related_post
     }
     
     return render(request, 'blog_details.html', context)

@@ -12,10 +12,11 @@
         <li><a href="#">{{blog.created_date}}</a></li>
         <li><a href="#">{{blog.blogs_comment.all.count}} Comments</a></li>
       </ul>
-      <p>{{blog.description|truncatechars:150}}</p>
+      <p>{{blog.description|truncatechars:150}}
       {% if blog.description|length > 150 %}
-      <a href="#">More</a>
+      <a href="{% url 'blog_details' blog.slug %}">More</a>
       {% endif %}
+      </p>
       <div class="post-options">
         <div class="row">
           <div class="col-lg-12">

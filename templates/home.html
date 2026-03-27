@@ -30,7 +30,7 @@
                   <p>
                    {{blog.description|truncatechars:150}}
                    {% if blog.description|length > 150 %}
-                  <a href="">More</a>
+                  <a href="{% url 'blog_details' blog.slug %}">More</a>
                   {% endif %}
                   </p>
                   <div class="post-options">
