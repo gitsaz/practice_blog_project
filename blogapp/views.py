@@ -88,3 +88,7 @@ def category_blogs(request, slug):
     }
     
     return render(request, 'category_blogs.html', context)
+
+
+def about(request):
+    return render(request, 'about.html')
