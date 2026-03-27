@@ -40,14 +40,14 @@ def blogs(request):
     return render(request, 'blogs.html', context)
 
 
-def PostDetails(request, slug):
+def blog_details(request, slug):
     blog = get_object_or_404(Blog, slug=slug)
     
     context = {
         'blog':blog
     }
     
-    return render(request, 'post_details.html', context)
+    return render(request, 'blog_details.html', context)
 
 
 def tag_blogs(request, slug):
