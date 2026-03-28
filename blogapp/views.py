@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
-from .models import Blog, Category, Tag
+from .models import Blog, Category, Tag, Comment
+from .forms import TextForm
 
 # Create your views here.
 def home(request):
@@ -41,6 +42,7 @@ def blogs(request):
 
 
 def blog_details(request, slug):
+    form = TextForm()
     blog = get_object_or_404(Blog, slug=slug)
     categories = Category.objects.all()
     tags = Tag.objects.all()
@@ -48,12 +50,23 @@ def blog_details(request, slug):
     
     if not related_post:
         related_post = Blog.objects.filter(category=blog.category).exclude(id=blog.id).order_by('-created_date')
+        
+    if request.method == 'POST' and request.user.is_authenticated:
+        form = TextForm(request.POST)
+        if form.is_valid():
+            Comment.objects.create(
+                user=request.user,
+                blog=blog,
+                text=form.cleaned_data.get('text') 
+            )
+            return redirect('blog_details', slug=slug)
     
     context = {
         'blog':blog,
         'categories':categories,
         'tags':tags,
-        'related_post':related_post
+        'related_post':related_post,
+        'form':form
     }
     
     return render(request, 'blog_details.html', context)
