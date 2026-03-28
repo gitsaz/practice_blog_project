@@ -61,7 +61,11 @@
                     {% for comment in blog.blogs_comment.all %}
                     <li>
                       <div class="author-thumb">
-                        <img src="{% static 'images/comment-author-01.jpg' %}" alt="" />
+                        {% if comment.user.profile_picture %}
+                          <img src="{{comment.user.profile_picture.url}}" alt="" />
+                        {% else %}
+                          <img src="media/user_profile/default.png" alt="" />
+                        {% endif %}
                       </div>
                       <div class="right-content">
                         <h4>{{blog.user.username}}<span>{{blog.created_date}}</span></h4>
@@ -73,7 +77,11 @@
                     {% endfor %}
                     <li class="replied">
                       <div class="author-thumb">
-                        <img src="{% static 'images/comment-author-02.jpg' %}" alt="" />
+                        {% if user.profile.image %}
+                          <img src="{{user.peofile.image.url}}" alt="" />
+                        {% else %}
+                          <img src="media/user_profile/default.png" alt="" />
+                        {% endif %}
                       </div>
                       <div class="right-content">
                         <h4>Thirteen Man<span>May 20, 2020</span></h4>

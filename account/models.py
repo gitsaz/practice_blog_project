@@ -9,9 +9,8 @@ class User(AbstractUser):
     )
     
     profile_picture = models.ImageField(
-        blank=True,
-        null=True,
-        upload_to="user_profile"
+        upload_to="user_profile/",
+        default="user-profile/default.png"
     )
     
     REQUIRED_FIELDS = ["email"]
