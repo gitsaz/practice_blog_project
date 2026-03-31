@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
-from .models import Blog, Category, Tag, Comment
+from .models import Blog, Category, Tag, Comment, Reply
 from .forms import TextForm
 
 # Create your views here.
@@ -101,6 +102,23 @@ def category_blogs(request, slug):
     }
     
     return render(request, 'category_blogs.html', context)
+
+
+
+@login_required(login_url="")
+def reply(request, blog_id, comment_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    if request.method == "POST":
+        form = TextForm(request.POST)
+        if form.is_valid():
+            comment = get_object_or_404(Comment, id=comment_id)
+            Reply.objects.create(
+            user = request.user,
+            comment = comment,
+            text = form.cleaned_data.get("text")
+            )
+    return redirect("blog_details", slug=blog.slug)
+
 
 
 def about(request):

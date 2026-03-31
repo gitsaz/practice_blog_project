@@ -12,7 +12,11 @@
             <div class="col-lg-12">
               <div class="blog-post">
                 <div class="blog-thumb">
-                  <img style="height: 600px;" src="{{ blog.banner.url }}" alt="" />
+                  <img
+                    style="height: 600px"
+                    src="{{ blog.banner.url }}"
+                    alt=""
+                  />
                 </div>
                 <div class="down-content">
                   <span>{{blog.category}}</span>
@@ -33,7 +37,7 @@
                           {% if blog.tag.all.count > 0 %}
                           {% for tag in blog.tag.all %}
                           <li><a href="#">{{tag.title}}</a></li>
-                          {% endfor %}
+                          {% endfor%}
                           {% else %}
                           <li>None</li>
                           {% endif %}
@@ -57,40 +61,88 @@
                   <h2>{{blog.blogs_comment.count}} comments</h2>
                 </div>
                 <div class="content">
-                  <ul>
+                  <ul class="d-flex flex-column">
                     {% for comment in blog.blogs_comment.all %}
                     <li>
                       <div class="author-thumb">
                         {% if comment.user.profile_picture %}
-                          <img src="{{comment.user.profile_picture.url}}" alt="" />
+                        <img
+                          src="{{comment.user.profile_picture.url}}"
+                          alt=""
+                        />
                         {% else %}
-                          <img src="media/user_profile/default.png" alt="" />
+                        <img src="media/user_profile/default.png" alt="" />
                         {% endif %}
                       </div>
                       <div class="right-content">
-                        <h4>{{blog.user.username}}<span>{{blog.created_date}}</span></h4>
+                        <h4>
+                          {{blog.user.username}}<span
+                            >{{blog.created_date}}</span
+                          >
+                        </h4>
+                        <p>{{comment.text}}</p>
+                        <form
+                          id="comment"
+                          action="{% url 'reply' blog.id comment.id %}"
+                          method="POST"
+                        >
+                          {% csrf_token %}
+                          <div class="row">
+                            <div class="col-lg-12">
+                              <fieldset>
+                                <textarea
+                                  name="text"
+                                  rows="6"
+                                  cols="80"
+                                  id="message"
+                                  placeholder="Type your reply"
+                                  required=""
+                                ></textarea>  
+                              </fieldset>
+                            </div>
+                            <div class="col-lg-12">
+                              {% if request.user.is_authenticated %}
+                              <fieldset>
+                                <button
+                                  type="submit"
+                                  id="form-submit"
+                                  class="main-button"
+                                >
+                                  reply
+                                </button>
+                              </fieldset>
+                              {% else %}
+                              <fieldset>
+                                <a href="">
+                                  <button id="form-submit" class="main-button">
+                                    Please Login to reply
+                                  </button>
+                                </a>
+                              </fieldset>
+                              {% endif %}
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </li>
+                    {% endfor %}
+                    {% for reply in comment.blogs_comment.all %}
+                    <li class="replied">
+                      <div class="author-thumb">
+                        {% if user.profile.image %}
+                        <img src="{{user.peofile.image.url}}" alt="" />
+                        {% else %}
+                        <img src="media/user_profile/default.png" alt="" />
+                        {% endif %}
+                      </div>
+                      <div class="right-content">
+                        <h4>{{reply.user.username}}<span>{{reply.created_date}}</span></h4>
                         <p>
-                          {{comment.text}}
+                          {{reply.text}}
                         </p>
                       </div>
                     </li>
                     {% endfor %}
-                    <li class="replied">
-                      <div class="author-thumb">
-                        {% if user.profile.image %}
-                          <img src="{{user.peofile.image.url}}" alt="" />
-                        {% else %}
-                          <img src="media/user_profile/default.png" alt="" />
-                        {% endif %}
-                      </div>
-                      <div class="right-content">
-                        <h4>Thirteen Man<span>May 20, 2020</span></h4>
-                        <p>
-                          In porta urna sed venenatis sollicitudin. Praesent
-                          urna sem, pulvinar vel mattis eget.
-                        </p>
-                      </div>
-                    </li>
                   </ul>
                 </div>
               </div>
@@ -101,7 +153,11 @@
                   <h2>Your comment</h2>
                 </div>
                 <div class="content">
-                  <form id="comment" action="{% url 'blog_details' blog.slug %}" method="POST">
+                  <form
+                    id="comment"
+                    action="{% url 'blog_details' blog.slug %}"
+                    method="POST"
+                  >
                     {% csrf_token %}
                     <div class="row">
                       <div class="col-lg-12">
@@ -123,16 +179,13 @@
                             id="form-submit"
                             class="main-button"
                           >
-                            Submit
+                            comment
                           </button>
                         </fieldset>
                         {% else %}
                         <fieldset>
                           <a href="">
-                            <button
-                              id="form-submit"
-                              class="main-button"
-                            >
+                            <button id="form-submit" class="main-button">
                               Please Login to Comment
                             </button>
                           </a>
@@ -230,4 +283,3 @@
 </section>
 
 {% endblock content %}
-
