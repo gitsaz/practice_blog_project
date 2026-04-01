@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 from .models import Blog, Category, Tag, Comment, Reply
@@ -18,7 +19,7 @@ def home(request):
     return render(request, 'home.html', context)
 
 def blogs(request):
-    queryset = Blog.objects.order_by('-created_date')
+    queryset = Blog.objects.order_by('-created_date')                                                                                                                                                                                                                                                                                  
     tags = Tag.objects.order_by('-created_date')
     categories = Category.objects.order_by('-created_date')
     page = request.GET.get('page', 1)
@@ -119,7 +120,33 @@ def reply(request, blog_id, comment_id):
             )
     return redirect("blog_details", slug=blog.slug)
 
+def search_blog(request):
+    search_key = request.GET.get('search', None)
+    tags = Tag.objects.all()
+    categories = Category.objects.all() 
+    
+    if search_key:
+        blogs = Blog.objects.filter(
+            Q(title__icontains=search_key) |
+            Q(category__title__icontains=search_key) |
+            Q(tag__title__icontains=search_key) |
+            Q(user__username__icontains=search_key)
+        ).distinct
+    
+        context = {
+            "blogs":blogs,
+            "tags":tags,
+            "categories":categories
+        }
+        return render(request, "search_blog.html", context)   
 
-
+    else:
+        blogs = Blog.objects.all()
+        context = {
+            "blogs":blogs
+        }
+        return render(request, "search_blog.html", context)
+        
+        
 def about(request):
     return render(request, 'about.html')
