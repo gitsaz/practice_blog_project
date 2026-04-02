@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+{% block content %}
+    
+<section class="contact-us">
+      <div class="container">
+        <div class="row">
+        
+          <div class="col-lg-12">
+            <div class="down-contact">
+              <div class="row">
+                <div class="col-lg-8">
+                  <div class="sidebar-item contact-form">
+                    <div class="sidebar-heading">
+                      <h2>Login in to your Account</h2>
+                    </div>                    
+                    <div class="content">
+                      <form id="contact" action="" method="post">
+                        <div class="row">
+                          <div class="col-md-12 col-sm-12">
+                            <fieldset>
+                              <input name="username" type="text" id="usernaem_id" placeholder="Username or Email" required="">
+                            </fieldset>
+                          </div>
+                          <div class="col-md-12 col-sm-12">
+                            <fieldset>
+                              <input name="password" type="text" id="password" placeholder="Password" required="">
+                            </fieldset>
+                          </div>
+                          <div class="col-lg-12">
+                            <fieldset>
+                              <button type="submit" id="form-submit" class="main-button btn btn-primary w-100">Login</button>
+                            </fieldset>
+                          </div>
+                          <div class="text-center align-item-center col-md-12 col-sm-12">
+                            <p class="mt-1">Do not have a account? please <a href="{% url 'registration' %}">Registration</a></p>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          
+        </div>
+      </div>
+    </section>
+
+{% endblock content %}
