@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Login{% endblock title %}
+{% block title %}Registration{% endblock title %}
 {% block content %}
     
 <section class="contact-us">
@@ -16,26 +16,39 @@
                       <h2>Registration your Account</h2>
                     </div>                    
                     <div class="content">
-                      <form id="contact" action="" method="post">
+                      <form id="contact" action="" method="POST" novalidate>
+                        {% csrf_token %}
                         <div class="row">
                           <div class="col-md-12 col-sm-12">
                             <fieldset>
-                              <input name="username" type="text" id="usernaem_id" placeholder="Enter username" required="">
+                              <input name="username" type="text" id="username_id" placeholder="Enter username" required="">
+                              {% for error in form.username.errors %}
+                              <p class="text-danger">{{error}}</p>
+                              {% endfor %}
                             </fieldset>
                           </div>
                           <div class="col-md-12 col-sm-12">
                             <fieldset>
                               <input name="email" type="email" id="email_id" placeholder="Enter email" required="">
+                              {% for error in form.email.errors %}
+                              <p class="pt-0 text-danger">{{error}}</p>
+                              {% endfor %}
                             </fieldset>
                           </div>
                           <div class="col-md-12 col-sm-12">
                             <fieldset>
                               <input name="password" type="password" id="password" placeholder="Enter Password" required="">
+                              {% for error in form.password.errors %}
+                              <p class="text-danger">{{error}}</p>
+                              {% endfor %}
                             </fieldset>
                           </div>
                           <div class="col-md-12 col-sm-12">
                             <fieldset>
                               <input name="confirm_password" type="password" id="confirm_password" placeholder="Enter Confirm Password" required="">
+                              {% for error in form.confirm_password.errors %}
+                              <p class="text-danger">{{error}}</p>
+                              {% endfor %}
                             </fieldset>
                           </div>
                           <div class="col-lg-12">
