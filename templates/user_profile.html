@@ -2,23 +2,41 @@
 {% load static %}
 {% block title %}User Profile{% endblock title %}
 {% block content %}
-    
+
 <div class="profile">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="text-center">
-                    {% if profile.user.profile_picture %}
-                        <img class="rounded rounded-circle profile-picture" src="{{profile.user.profile_picture.url}}" alt="">
-                    {% else %}
-                        <img src="media/user_profile/default.png" alt="" />
-                    {% endif %}
-                </div>
-            </div>
-            <div class="col-md-8">
-            </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="text-center">
+          {% if profile.user.profile_picture %}
+          <img
+            class="rounded rounded-circle profile-picture"
+            src="{{ profile.user.profile_picture.url }}"
+            alt="Profile Picture"
+          />
+          {% else %}
+          <img
+            class="rounded rounded-circle profile-picture"
+            src="/media/user_profile/default.png"
+            alt="Default Profile Picture"
+          />
+          {% endif %}
         </div>
+        <ul class="text-center py-2">
+            <li class="py-1">
+                <span>Post: <strong>100</strong></span>
+            </li>
+            <li class="py-1">
+                <span>Follower: <strong>100</strong></span>
+            </li>
+            <li class="py-1">
+                <span>Following: <strong>100</strong></span>
+            </li>
+        </ul>
+      </div>
+      <div class="col-md-8"></div>
     </div>
+  </div>
 </div>
 
 {% endblock content %}
