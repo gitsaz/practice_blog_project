@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}User Profile{% endblock title %}
+{% block content %}
+    
+<div class="profile">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="text-center">
+                    {% if profile.user.profile_picture %}
+                        <img class="rounded rounded-circle profile-picture" src="{{profile.user.profile_picture.url}}" alt="">
+                    {% else %}
+                        <img src="media/user_profile/default.png" alt="" />
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-8">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

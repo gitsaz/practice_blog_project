@@ -148,5 +148,8 @@ def search_blog(request):
         return render(request, "search_blog.html", context)
         
         
+def user_profile(request):
+    return render(request, 'user_profile.html')
+        
 def about(request):
     return render(request, 'about.html')

@@ -8,7 +8,8 @@ from .views import(
     category_blogs,
     about,
     reply,
-    search_blog
+    search_blog,
+    user_profile
 )
 urlpatterns = [
     path('', home, name="home"),
@@ -18,5 +19,6 @@ urlpatterns = [
     path('category_blogs/<str:slug>/', category_blogs, name="category_blogs"),
     path("reply/<int:blog_id>/<int:comment_id>/", reply, name="reply"),
     path('search_blog/', search_blog, name="search_blog"),
+    path('user_profile/', user_profile, name="user_profile"),
     path('about/', about, name="about")
 ]
