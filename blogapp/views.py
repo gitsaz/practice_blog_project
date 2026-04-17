@@ -1,7 +1,13 @@
+from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
-from django.contrib.auth.decorators import login_required
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
+
+from account.forms import UserProfileUpdateForm
+
 from .models import Blog, Category, Tag, Comment, Reply
 from .forms import TextForm
 
@@ -148,8 +154,32 @@ def search_blog(request):
         return render(request, "search_blog.html", context)
         
         
+@login_required(login_url='user_login')
 def user_profile(request):
-    return render(request, 'user_profile.html')
+    form = UserProfileUpdateForm(instance=request.user)
+
+    if request.method == "POST":
+        form = UserProfileUpdateForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            user = form.save()
+            if form.cleaned_data.get("password"):
+                update_session_auth_hash(request, user)
+            messages.success(request, "Your profile has been updated successfully.")
+            return redirect("user_profile")
+
+    default_picture_names = {"user-profile/default.png", "user_profile/default.png"}
+    profile_picture = request.user.profile_picture
+    if profile_picture and profile_picture.name not in default_picture_names:
+        profile_picture_url = profile_picture.url
+    else:
+        profile_picture_url = f"{settings.MEDIA_URL}user_profile/default.png"
+
+    context = {
+        "form": form,
+        "profile_user": request.user,
+        "profile_picture_url": profile_picture_url,
+    }
+    return render(request, 'user_profile.html', context)
         
 def about(request):
     return render(request, 'about.html')

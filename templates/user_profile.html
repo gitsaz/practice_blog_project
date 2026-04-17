@@ -8,19 +8,11 @@
     <div class="row">
       <div class="col-md-4">
         <div class="text-center">
-          {% if profile.user.profile_picture %}
           <img
             class="rounded rounded-circle profile-picture"
-            src="{{ profile.user.profile_picture.url }}"
+            src="{{ profile_picture_url }}"
             alt="Profile Picture"
           />
-          {% else %}
-          <img
-            class="rounded rounded-circle profile-picture"
-            src="/media/user_profile/default.png"
-            alt="Default Profile Picture"
-          />
-          {% endif %}
         </div>
         <ul class="text-center py-2">
             <li class="py-1">
@@ -33,7 +25,7 @@
                 <span>Following: <strong>100</strong></span>
             </li>
         </ul>
-        <ul class="list-group text-center pt-3">
+        <ul class="list-group text-center mb-3 pt-3">
           <li class="list-group-item my-1">
             <a class="text-decoration-none" href="#">My Blog</a>
           </li>
@@ -47,32 +39,77 @@
           <h3 class="text-muted">Profile Details</h3>
         </div>
         <hr>
-        <div class="form">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags|default:'info' }}">
+              {{ message }}
+            </div>
+            {% endfor %}
+          {% endif %}
+
+          {% for error in form.non_field_errors %}
+          <p class="text-danger">{{ error }}</p>
+          {% endfor %}
+
           <div class="form-group">
-            <label for="username">Username</label>
-            <input class="form-control" name="username" type="text">
+            <label for="{{ form.username.id_for_label }}">Username</label>
+            {{ form.username }}
+            {% for error in form.username.errors %}
+            <p class="text-danger">{{ error }}</p>
+            {% endfor %}
           </div>
           <div class="form-group">
-            <label for="email">Email</label>
-            <input class="form-control" name="username" type="text">
+            <label for="{{ form.email.id_for_label }}">Email</label>
+            {{ form.email }}
+            {% for error in form.email.errors %}
+            <p class="text-danger">{{ error }}</p>
+            {% endfor %}
           </div>
           <div class="form-group">
-            <label for="firstname">First Name</label>
-            <input class="form-control" name="first_name" type="text">
+            <label for="{{ form.first_name.id_for_label }}">First Name</label>
+            {{ form.first_name }}
+            {% for error in form.first_name.errors %}
+            <p class="text-danger">{{ error }}</p>
+            {% endfor %}
           </div>
           <div class="form-group">
-            <label for="lastname">Last Name</label>
-            <input class="form-control" name="last_name" type="text">
+            <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+            {{ form.last_name }}
+            {% for error in form.last_name.errors %}
+            <p class="text-danger">{{ error }}</p>
+            {% endfor %}
           </div>
           <div class="form-group">
-            <label for="password">Password</label>
-            <input class="form-control" name="password" type="password">
+            <label for="{{ form.profile_picture.id_for_label }}">Profile Picture</label>
+            {{ form.profile_picture }}
+            {% for error in form.profile_picture.errors %}
+            <p class="text-danger">{{ error }}</p>
+            {% endfor %}
           </div>
           <div class="form-group">
-            <label for="confirm_password">Confirm Password</label>
-            <input class="form-control" name="confirm_password" type="password">
+            <label for="{{ form.password.id_for_label }}">New Password</label>
+            {{ form.password }}
+            {% for error in form.password.errors %}
+            <p class="text-danger">{{ error }}</p>
+            {% endfor %}
           </div>
-        </div>
+          <div class="form-group">
+            <label for="{{ form.confirm_password.id_for_label }}">Confirm New Password</label>
+            {{ form.confirm_password }}
+            {% for error in form.confirm_password.errors %}
+            <p class="text-danger">{{ error }}</p>
+            {% endfor %}
+            <small class="text-muted d-block mt-2">
+              Leave the password fields empty if you do not want to change your password.
+            </small>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

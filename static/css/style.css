@@ -1,3 +1,16 @@
 input, textarea{
     text-transform: none !important;
 }
+
+.btn-primary{
+    display: inline-block !important;
+    background-color: #f48840 !important;
+    color: #fff !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    padding: 12px 20px !important;
+    text-transform: uppercase !important;
+    transition: all .3s !important;
+    border: none !important;
+    outline: none !important;
+}
